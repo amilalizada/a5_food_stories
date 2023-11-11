@@ -16,7 +16,7 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = 'Categories'
         verbose_name = 'Category'
-        ordering = ['-id']
+        # ordering = ['-id']
 
     def __str__(self) -> str:
         return self.title
@@ -70,3 +70,8 @@ class Story(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+class StoryImages(models.Model):
+    image = ImageField(upload_to='story/related_images')
+    story = models.ForeignKey(Story, on_delete=models.CASCADE)
