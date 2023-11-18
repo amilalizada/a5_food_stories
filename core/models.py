@@ -1,4 +1,5 @@
 from django.db import models
+from core.validators import validate_email
 
 # Create your models here.
 
@@ -11,7 +12,7 @@ class Subscriber(models.Model):
 
 class Contact(models.Model):
     name = models.CharField(max_length=50)
-    email = models.EmailField()
+    email = models.EmailField(validators=[validate_email])
     subject = models.CharField(max_length=30)
     message = models.TextField()
 

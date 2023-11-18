@@ -17,11 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from core.views import home, contact
+from story.views import recipes, recipe
 from food import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
-    path('contact/', contact)
+    path('contact/', contact, name='contact'),
+    path('recipes/', recipes, name='recipes'),
+    path('recipe/<int:recipe_id>/', recipe, name='recipe_single'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
