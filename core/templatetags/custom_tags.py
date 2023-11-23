@@ -5,7 +5,7 @@ register = Library()
 
 @register.simple_tag
 def get_categories(limit=10):
-    print(limit)
+    # print(limit)
     return Category.objects.all()[:limit]
 
 

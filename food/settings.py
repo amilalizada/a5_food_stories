@@ -121,6 +121,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL = 'authentication.User'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -140,6 +142,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
-    messages.SUCCESS: "alert-success",
+    messages.SUCCESS: "success",
     messages.ERROR: "danger",
 }

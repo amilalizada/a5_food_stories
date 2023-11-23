@@ -47,7 +47,6 @@
                                 <h3><a href="{% url 'recipe_single' recipe.id %}">{{recipe.title}}</a></h3>
                                 <p>{{recipe.content}}
                                 </p>
-                                <a class="btn btn-primary mb-4" href="{% url 'recipe_like' recipe.id %}" class="more">Like</a>
                                 <p class="mb-0"><a href="{% url 'recipe_single' recipe.id %}" class="btn btn-primary">Read More <span
                                         class="icon-arrow_forward ml-4"></span></a></p>
                             </div>

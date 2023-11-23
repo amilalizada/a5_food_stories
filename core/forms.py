@@ -39,6 +39,13 @@ class ContactForm(forms.ModelForm):
                 "rows": 7
             })  
         }
+        labels = [
+            "Name",
+            "Surname",
+            "Email",
+            "Subject",
+            "Message",
+        ]
 
     def clean(self):
         cleaned_data = super().clean()

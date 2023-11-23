@@ -31,7 +31,8 @@ class RecipeAdmin(admin.ModelAdmin):
         return tag_arr
     
     def get_photo(self, obj):
-        img_str = f"<img src='{obj.image.url}' width='100px'>"
+        if obj.image:
+            img_str = f"<img src='{obj.image.url}' width='100px'>"
         return format_html(img_str)
     
 
