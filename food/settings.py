@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'core',
     'authentication',
     'story',
@@ -90,6 +91,12 @@ DATABASES = {
     }
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'amilalizada@gmail.com'
+EMAIL_HOST_PASSWORD = 'zduylselywpugfdx'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -123,6 +130,11 @@ USE_TZ = True
 
 AUTH_USER_MODEL = 'authentication.User'
 
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -145,3 +157,12 @@ MESSAGE_TAGS = {
     messages.SUCCESS: "success",
     messages.ERROR: "danger",
 }
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = 664633852507087
+SOCIAL_AUTH_FACEBOOK_SECRET = '3e51496d269869602d01461dbdcf9e04'
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'

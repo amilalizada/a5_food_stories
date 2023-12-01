@@ -71,6 +71,7 @@ class RegisterForm(forms.ModelForm):
     
     def save(self, commit: bool = ...) -> Any:
         user = super().save(commit=False)
+        user.is_active = False
         user.set_password(self.cleaned_data.get("password"))
 
         return super().save(commit)
