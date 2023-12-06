@@ -10,7 +10,7 @@ from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 
 from .forms import RegisterForm, LoginForm
-from authentication.tokens import account_activation_token
+from account.tokens import account_activation_token
 from django.contrib.auth import get_user_model
 
 User = get_user_model()

@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'core',
-    'authentication',
+    'account',
     'story',
 ]
 
@@ -128,7 +128,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-AUTH_USER_MODEL = 'authentication.User'
+AUTH_USER_MODEL = 'account.User'
 
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.facebook.FacebookOAuth2',

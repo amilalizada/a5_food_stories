@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from core.views import home, contact
 from story.views import recipes, recipe, like_recipe, get_liked
-from authentication.views import register, login, logout, user_profile, activate
+from account.views import register, login, logout, user_profile, activate
 from food import settings
 from django.conf.urls.static import static
 
