@@ -47,7 +47,7 @@ class Recipe(models.Model):
     class Meta:
         verbose_name_plural = 'Recipes'
         verbose_name = 'Recipe'
-        ordering = ['-id']
+        # ordering = ['-id']
 
 
     def __str__(self) -> str:

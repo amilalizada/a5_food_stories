@@ -16,24 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
-from core.views import home, contact
-from story.views import recipes, recipe, like_recipe, get_liked
-from account.views import register, login, logout, user_profile, activate
+from account.views import activate
 from food import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name='home'),
-    path('contact/', contact, name='contact'),
-    path('recipes/', recipes, name='recipes'),
-    path('liked-recipes/', get_liked, name='liked_recipes'),
-    path('recipe/<int:recipe_id>/', recipe, name='recipe_single'),
-    path('like_recipe/<int:pk>/', like_recipe, name='recipe_like'),
-    path('register/', register, name='register'),
-    path('login/', login, name='login'),
-    path('logout/', logout, name='logout'),
-    path('profile/', user_profile, name='profile'),
+    path('core/', include('core.urls')),
+    path('story/', include('story.urls')),
+    path('account/', include('account.urls')),
     re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,32})/$',
         activate, name='activate'),
     path('social-auth/', include('social_django.urls', namespace="social")),
