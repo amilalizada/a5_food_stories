@@ -162,7 +162,9 @@ MESSAGE_TAGS = {
 SOCIAL_AUTH_FACEBOOK_KEY = 664633852507087
 SOCIAL_AUTH_FACEBOOK_SECRET = '3e51496d269869602d01461dbdcf9e04'
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_URL = 'logout'
-LOGOUT_REDIRECT_URL = 'login'
+from django.urls import reverse_lazy
+
+LOGIN_URL = reverse_lazy("account:logout")
+LOGIN_REDIRECT_URL = reverse_lazy("core:home")
+LOGOUT_URL = reverse_lazy("account:logout")
+LOGOUT_REDIRECT_URL = reverse_lazy("account:login")

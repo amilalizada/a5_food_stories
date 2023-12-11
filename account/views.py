@@ -8,6 +8,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
+from django.urls import reverse_lazy
 
 from .forms import RegisterForm, LoginForm
 from account.tokens import account_activation_token
@@ -63,9 +64,9 @@ def login(request):
             )
             if user:
                 django_login(request, user)
-                return redirect("home")
+                return redirect("core:home")
             else:
-                return redirect("register")
+                return redirect("account:register")
 
     context = {
         "form": form
@@ -73,13 +74,13 @@ def login(request):
 
     return render(request, "login.html", context=context)
 
-@login_required(login_url="login")
+@login_required(login_url=reverse_lazy("account:login"))
 def logout(request):
     django_logout(request)
 
-    return redirect("login")
+    return redirect("account:login")
 
-@login_required(login_url="login")
+@login_required(login_url=reverse_lazy("account:login"))
 def user_profile(request):
 
     return render(request, "user-profile.html")
