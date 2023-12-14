@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-kn8#0#&6m+ek+%ajq8jii_6&mli#%@$$b&qnb)2)n@0!pvmz$9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'food.middleware.middleware.CustomMiddleware',
 ]
 
 ROOT_URLCONF = 'food.urls'

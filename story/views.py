@@ -1,5 +1,6 @@
 from typing import Any
 from django.db import models
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -75,9 +76,13 @@ class UpdateRecipeView(LoginRequiredMixin, UpdateView):
 class DeleteRecipeView(LoginRequiredMixin, DeleteView):
     model = Recipe
     template_name = 'confirm.html'
-    # form_class = CreateRecipeForm
-    # template_name = 'update_recipe.html'
     success_url = reverse_lazy('story:recipes')
+
+    # def delete(self, request, *args, **kwargs):
+    #     self.object = self.get_object()
+    #     self.object.delete()
+
+    #     return HttpResponseRedirect(self.success_url)
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()

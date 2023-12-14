@@ -11,14 +11,14 @@ admin.site.register(StoryImages)
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'get_photo', 'category', 'content', 'description', 'get_tags', 'created_at',)
+    list_display = ('title', 'author', 'get_photo', 'slug', 'category', 'content', 'description', 'get_tags', 'created_at',)
     list_filter = ["category", "author", "tags"]
     list_display_links = ['title', 'content']
     list_editable = ['category', 'author',]
     search_fields = ['title', 'content', 'description', 'category__title', 'tags__title']
     fieldsets = (
         ('info', {
-            'fields': ('title', 'image', 'content', 'description',)
+            'fields': ('title', 'image', 'content', 'description', 'slug')
         }),
         ('relations', {
             'fields': ('category', 'tags', 'author',)

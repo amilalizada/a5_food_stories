@@ -40,6 +40,7 @@ class Recipe(models.Model):
     category = models.ForeignKey(Category, related_name='recipes', on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    slug = models.SlugField(null=True, blank=True)
 
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
