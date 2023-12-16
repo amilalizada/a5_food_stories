@@ -1,16 +1,20 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin
 from .models import Category, Tag, Recipe, Story, StoryImages
 
 
 # Register your models here.
 
-admin.site.register(Category)
 admin.site.register(Tag)
 admin.site.register(StoryImages)
 
+@admin.register(Category)
+class CategoryAdmin(TranslationAdmin):
+    list_display = ('title',)
+
 @admin.register(Recipe)
-class RecipeAdmin(admin.ModelAdmin):
+class RecipeAdmin(TranslationAdmin):
     list_display = ('title', 'author', 'get_photo', 'slug', 'category', 'content', 'description', 'get_tags', 'created_at',)
     list_filter = ["category", "author", "tags"]
     list_display_links = ['title', 'content']

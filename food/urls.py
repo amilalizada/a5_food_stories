@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf.urls.i18n import i18n_patterns
 from django.urls import path, re_path, include
 from account.views import activate
 from food import settings
@@ -22,10 +23,15 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('core/', include('core.urls')),
-    path('story/', include('story.urls')),
-    path('account/', include('account.urls')),
     re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,32})/$',
         activate, name='activate'),
     path('social-auth/', include('social_django.urls', namespace="social")),
+    re_path(r'^rosetta/', include('rosetta.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += i18n_patterns(
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('core/', include('core.urls')),
+    path('story/', include('story.urls')),
+    path('account/', include('account.urls')),
+)

@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 from core.forms import ContactForm
 from django.views.generic import CreateView
+from django.utils.translation import gettext_lazy as _
 from .models import Contact
 # Create your views here.
 
@@ -34,6 +35,6 @@ class ContactView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        messages.add_message(self.request, messages.SUCCESS, "Message sent successfully")
+        messages.add_message(self.request, messages.SUCCESS, _("Message sent successfully"))
 
         return super().form_valid(form)

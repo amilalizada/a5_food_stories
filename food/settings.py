@@ -26,12 +26,13 @@ SECRET_KEY = 'django-insecure-kn8#0#&6m+ek+%ajq8jii_6&mli#%@$$b&qnb)2)n@0!pvmz$9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'core',
     'account',
     'story',
+    'rosetta',
 ]
 
 
@@ -52,9 +54,10 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'food.middleware.middleware.CustomMiddleware',
+    # 'food.middleware.middleware.CustomMiddleware',
 ]
 
 ROOT_URLCONF = 'food.urls'
@@ -121,7 +124,18 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+gettext = lambda s: s
+
+LANGUAGES = [
+    ('en', gettext('English')),
+    ('az', gettext('Azerbaijan')),
+    ('ru', gettext('Russian')),
+]
+
+# MODELTRANSLATION_LANGUAGES = ('az', 'ru')
+
+LOCALE_PATHS = [BASE_DIR , 'locale']
 
 TIME_ZONE = 'UTC'
 

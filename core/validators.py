@@ -13,5 +13,5 @@ def validate_email(value):
     Returns:
         None
     """
-    if 'amil' not in value:
-        raise ValidationError('Email must contain amil')
+    if 'com' not in value:
+        raise ValidationError('Email must contain com')
