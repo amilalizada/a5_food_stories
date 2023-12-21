@@ -26,7 +26,8 @@ urlpatterns = [
     re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,32})/$',
         activate, name='activate'),
     path('social-auth/', include('social_django.urls', namespace="social")),
-    re_path(r'^rosetta/', include('rosetta.urls'))
+    re_path(r'^rosetta/', include('rosetta.urls')),
+    path('api/', include('story.api.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += i18n_patterns(

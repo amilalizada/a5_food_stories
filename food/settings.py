@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'account',
     'story',
     'rosetta',
+    'rest_framework',
 ]
 
 

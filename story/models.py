@@ -45,10 +45,15 @@ class Recipe(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_full_name(self):
+        return self.author.get_full_name()
+
     class Meta:
         verbose_name_plural = 'Recipes'
         verbose_name = 'Recipe'
         # ordering = ['-id']
+
+    
 
 
     def __str__(self) -> str:
