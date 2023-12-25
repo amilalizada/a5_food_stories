@@ -21,7 +21,8 @@ class RecipeTagSerializer(serializers.ModelSerializer):
 
 
 class RecipeReadSerializer(serializers.ModelSerializer):
-    category = serializers.CharField(source='category.title')
+    # category = serializers.CharField(source='category.title')
+    category = CategoriesSerializer()
     tags = RecipeTagSerializer(many=True)
     author = serializers.CharField(source='author.get_full_name')
     class Meta:

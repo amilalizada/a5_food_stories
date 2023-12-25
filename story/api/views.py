@@ -2,6 +2,50 @@ from story.models import Category, Recipe
 from django.http import JsonResponse
 from .serializers import CategoriesSerializer, RecipeReadSerializer, RecipeCreateSerializer
 from rest_framework.decorators import api_view
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import ModelViewSet
+
+
+class RecipeViewSet(ModelViewSet):
+    # serilaizer_class = RecipeReadSerializer
+    serializer_classes = {
+        'default': RecipeReadSerializer,
+        'create': RecipeCreateSerializer,
+        'update': RecipeCreateSerializer,
+        'read': RecipeReadSerializer
+    }
+    queryset = Recipe.objects.all()
+
+    def get_serializer_class(self):
+        if self.action in self.serializer_classes.keys():
+            self.serializer_class = self.serializer_classes.get(self.action) #create
+        else:
+            self.serializer_class = self.serializer_classes['default']
+        
+        return super().get_serializer_class()
+
+
+class RecipeListCreateAPIView(ListCreateAPIView):
+    serializer_class = RecipeReadSerializer
+    queryset = Recipe.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            self.serializer_class = RecipeCreateSerializer
+
+        return super().get_serializer_class()
+
+
+class RecipeRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = RecipeReadSerializer
+    queryset = Recipe.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.method == 'PUT':
+            self.serializer_class = RecipeCreateSerializer
+
+        return super().get_serializer_class()
+
 
 def category_api_view(request):
     categories = Category.objects.all()
@@ -22,3 +66,33 @@ def recipe_api_view(request):
     serialized_data = RecipeReadSerializer(recipes, context={'request': request}, many=True)
 
     return JsonResponse(serialized_data.data, safe=False)
+
+
+@api_view(['GET', 'PUT', 'DELETE', 'PATCH'])
+def recipe_read_del_upd(request, pk):
+    try:
+        recipe = Recipe.objects.get(pk=pk)
+    except Recipe.DoesNotExist:
+        return JsonResponse({'error': 'Recipe not found'}, status=404)
+
+    if request.method == 'GET':
+        serializer = RecipeReadSerializer(recipe, context={'request': request})
+        return JsonResponse(serializer.data, status=200)
+
+    elif request.method == 'PUT':
+        serializer = RecipeCreateSerializer(recipe, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=200)
+        return JsonResponse(serializer.errors, status=400)
+
+    elif request.method == 'DELETE':
+        recipe.delete()
+        return JsonResponse({'message': 'Recipe deleted successfully'}, status=204)
+    
+    elif request.method == 'PATCH':
+        serializer = RecipeCreateSerializer(recipe, data=request.data, context={'request': request}, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=200)
+        return JsonResponse({'message': 'Something went wrong'}, status=400)
