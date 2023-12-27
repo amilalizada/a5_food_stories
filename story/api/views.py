@@ -4,30 +4,43 @@ from .serializers import CategoriesSerializer, RecipeReadSerializer, RecipeCreat
 from rest_framework.decorators import api_view
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['name'] = user.name
+
+        return token
 
 
 class RecipeViewSet(ModelViewSet):
+    ...
     # serilaizer_class = RecipeReadSerializer
-    serializer_classes = {
-        'default': RecipeReadSerializer,
-        'create': RecipeCreateSerializer,
-        'update': RecipeCreateSerializer,
-        'read': RecipeReadSerializer
-    }
-    queryset = Recipe.objects.all()
+    # serializer_classes = {
+    #     'default': RecipeReadSerializer,
+    #     'create': RecipeCreateSerializer,
+    #     'update': RecipeCreateSerializer,
+    #     'read': RecipeReadSerializer
+    # }
+    # queryset = Recipe.objects.all()
 
-    def get_serializer_class(self):
-        if self.action in self.serializer_classes.keys():
-            self.serializer_class = self.serializer_classes.get(self.action) #create
-        else:
-            self.serializer_class = self.serializer_classes['default']
+    # def get_serializer_class(self):
+    #     if self.action in self.serializer_classes.keys():
+    #         self.serializer_class = self.serializer_classes.get(self.action) #create
+    #     else:
+    #         self.serializer_class = self.serializer_classes['default']
         
-        return super().get_serializer_class()
+    #     return super().get_serializer_class()
 
 
 class RecipeListCreateAPIView(ListCreateAPIView):
     serializer_class = RecipeReadSerializer
     queryset = Recipe.objects.all()
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get_serializer_class(self):
         if self.request.method == 'POST':

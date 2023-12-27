@@ -3,4 +3,4 @@ from story.api.views import RecipeViewSet
 
 router = DefaultRouter()
 
-router.register(r'recipes', RecipeViewSet, basename='recipes')
+# router.register(r'recipes', RecipeViewSet, basename='recipes')

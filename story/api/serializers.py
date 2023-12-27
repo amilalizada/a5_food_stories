@@ -1,5 +1,15 @@
 from rest_framework import serializers
 from story.models import Category, Recipe, Tag
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class CustomObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['name'] = user.username
+
+        return token
 
 class CategoriesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,6 +50,7 @@ class RecipeReadSerializer(serializers.ModelSerializer):
 
 
 class RecipeCreateSerializer(serializers.ModelSerializer):
+    author = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Recipe
         fields = (
@@ -51,6 +62,11 @@ class RecipeCreateSerializer(serializers.ModelSerializer):
             'tags',
             'author',
         )
+    
+    def validate(self, attrs):
+        attrs['author'] = self.context["request"].user
+
+        return super().validate(attrs)
 
     # def save(self, commit=True):
     #     instance = super().save(commit=False)

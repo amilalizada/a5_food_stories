@@ -10,6 +10,7 @@ django-jazzmin==2.6.0
 django-modeltranslation==0.18.11
 django-rosetta==0.10.0
 djangorestframework==3.14.0
+djangorestframework-simplejwt==5.3.1
 idna==3.6
 Markdown==3.5.1
 oauthlib==3.2.2
