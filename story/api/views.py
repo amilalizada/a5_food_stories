@@ -6,15 +6,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
-        token['name'] = user.name
-
-        return token
 
 
 class RecipeViewSet(ModelViewSet):
@@ -38,6 +30,9 @@ class RecipeViewSet(ModelViewSet):
 
 
 class RecipeListCreateAPIView(ListCreateAPIView):
+    '''
+        This api view is used to create and list recipes
+    '''
     serializer_class = RecipeReadSerializer
     queryset = Recipe.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly,)
