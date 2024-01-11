@@ -21,6 +21,16 @@ class CategoriesSerializer(serializers.ModelSerializer):
         )
 
 
+class TagsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tag
+        fields = (
+            'id',
+            'title',
+        )
+
+
 class RecipeTagSerializer(serializers.ModelSerializer):
 
     class Meta:

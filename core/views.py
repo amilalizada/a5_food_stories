@@ -19,7 +19,7 @@ def contact(request):
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.SUCCESS, "Message sent successfully")
-            return redirect('contact')
+            return reverse_lazy('core:contact')
             
     elif request.method == "GET":
         form = ContactForm()

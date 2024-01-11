@@ -1,6 +1,6 @@
-from story.models import Category, Recipe
+from story.models import Category, Recipe, Tag
 from django.http import JsonResponse
-from .serializers import CategoriesSerializer, RecipeReadSerializer, RecipeCreateSerializer
+from .serializers import CategoriesSerializer, RecipeReadSerializer, RecipeCreateSerializer, TagsSerializer
 from rest_framework.decorators import api_view
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.viewsets import ModelViewSet
@@ -37,6 +37,10 @@ class RecipeListCreateAPIView(ListCreateAPIView):
     queryset = Recipe.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
+    def post(self, request, *args, **kwargs):
+        print(request.data, "here")
+        return super().post(request, *args, **kwargs)
+
     def get_serializer_class(self):
         if self.request.method == 'POST':
             self.serializer_class = RecipeCreateSerializer
@@ -58,6 +62,13 @@ class RecipeRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 def category_api_view(request):
     categories = Category.objects.all()
     serialized_data = CategoriesSerializer(categories, context={'request': request}, many=True)
+
+    return JsonResponse(serialized_data.data, safe=False)
+
+
+def tag_api_view(request):
+    tags = Tag.objects.all()
+    serialized_data = TagsSerializer(tags, context={'request': request}, many=True)
 
     return JsonResponse(serialized_data.data, safe=False)
 
