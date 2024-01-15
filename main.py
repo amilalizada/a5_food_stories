@@ -1,122 +1,51 @@
-# class Human:
-#     age = 20
+import time
+import threading
+import multiprocessing
+import requests
+import random
 
-#     def __init__(self, name, surname) -> None:
-#         self.name = name
-#         self.surname = surname
 
-#     def get_fullname(self):
-#         return self.name + ' ' + self.surname
+def download_image():
+    img = requests.get('https://picsum.photos/200')
+    with open(f'images/image{random.randint(0, 1000)}.jpg', 'wb') as f:
+        f.write(img.content)
+# def do_something():
+   
+#     print("before sleep")
+#     time.sleep(1)
+#     print("after sleep")
+
+if __name__ == "__main__":
+    t1 = time.time()
+
+    processes = []
+    for _ in range(100):
+        process = multiprocessing.Process(target=download_image)
+        process.start()
+        processes.append(process)
     
-#     def get_age(self):
-#         return self.age
-    
-#     def __str__(self) -> str:
-#         return self.name
-    
-#     def call(self):
-#         fullname = self.get_fullname()
-#         if fullname:
-#             print("ok")
-#         else:
-#             return None
-
-#         age = self.get_age()
-
-#         return f'{fullname} is {age} years old'
-    
-# class A:
-#     def get_fullname(self):
-#         return 'Other Name'
-    
-# class B:
-#     def get_fullname(self):
-#         return 'Abdulla'
-    
-# class Person(Human, A, B):
-#     def get_fullname(self):
-#         return super(A, self).get_fullname() + ' Jr.'
-
-# obj = Person('John', 'Doe')
-# print(obj.get_fullname())
+    for pr in processes:
+        pr.join()
+    t2 = time.time()
+    print("time taken: ", t2 - t1)
 
 
-# class Human:
-#     __age = 20
-#     _height = 180
-#     def __init__(self, name, surname) -> None:
-#         self.name = name
-#         self.surname = surname
 
-#     def get_fullname(self):
-#         return self.name + ' ' + self.surname
-    
-#     @property
-#     def age(self):
-#         return self.__age
-    
-#     @age.setter
-#     def age(self, value):
-#         if not isinstance(value, int):
-#             raise ValueError('Age must be an integer')
-#         self.__age = value
-    
-#     def __str__(self) -> str:
-#         return self.name
-    
-#     def call(self):
-#         fullname = self.get_fullname()
-#         if fullname:
-#             print("ok")
-#         else:
-#             return None
+# t1 = time.time()
 
-#         age = self.get_age()
+# download_image()
+# t2 = time.time()
+# print("time taken: ", t2 - t1)
 
-#         return f'{fullname} is {age} years old'
-    
-# obj = Human('John', 'Doe')
-# print(obj.age)
-# obj.age = 25
-# print(obj.age)
-# print(obj._height)
-from abc import ABC, abstractmethod
-import json
+# threads = []
 
-my_dict = {
-    "name": "John",
-    "surname": "Doe",
-    "age": 30
-}
+# for _ in range(100):
+#     thread = threading.Thread(target=download_image)
+#     thread.start()
+#     threads.append(thread)
 
-dict_str = json.dumps(my_dict)
-# print(dict_str, type(dict_str))
-# for i in dict_str:
-#     print(i)
-
-reverse_dict = json.loads(dict_str)
-print(reverse_dict, type(reverse_dict))
-
-for k, v in reverse_dict.items():
-    print(v)
-
-
-# class Vehicle(ABC):
-#     def start(self):
-#         print("started")
-#     @abstractmethod 
-#     def stop(self):
-#         pass
-
-# class Car(Vehicle):
-
-#     def stop(self):
-#         ...
-#     def voice(self):
-#         print("Vroom")
-
-# car_obj = Car()
-# car_obj.start()
+# for thread in threads:
+#     thread.join()
 
 
 

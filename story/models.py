@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.fields.files import ImageField
+from django.urls import reverse_lazy
 
 User = get_user_model()
 
@@ -47,6 +48,9 @@ class Recipe(models.Model):
 
     def get_full_name(self):
         return self.author.get_full_name()
+    
+    def get_absolute_url(self):
+        return reverse_lazy('story:recipe_single', kwargs={'pk': self.pk})
 
     class Meta:
         verbose_name_plural = 'Recipes'

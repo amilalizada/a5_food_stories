@@ -6,6 +6,8 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 
 
@@ -36,10 +38,9 @@ class RecipeListCreateAPIView(ListCreateAPIView):
     serializer_class = RecipeReadSerializer
     queryset = Recipe.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly,)
-
-    def post(self, request, *args, **kwargs):
-        print(request.data, "here")
-        return super().post(request, *args, **kwargs)
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['category__title', 'title']
+    search_fields = ['title']
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
