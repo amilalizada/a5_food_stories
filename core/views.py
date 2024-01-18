@@ -6,6 +6,8 @@ from core.forms import ContactForm
 from django.views.generic import CreateView
 from django.utils.translation import gettext_lazy as _
 from .models import Contact
+from .tasks import export
+
 # Create your views here.
 
 def home(request):
@@ -38,3 +40,8 @@ class ContactView(CreateView):
         messages.add_message(self.request, messages.SUCCESS, _("Message sent successfully"))
 
         return super().form_valid(form)
+    
+
+def export_view(request):
+    export.delay()
+    return HttpResponse("Exporting")

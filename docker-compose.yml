@@ -21,5 +21,13 @@ services:
     ports:
       - 8080:8080
 
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+
 volumes:
   postgres_data:
+
+#python -m celery -A django_celery worker
