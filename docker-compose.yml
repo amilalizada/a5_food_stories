@@ -14,7 +14,7 @@ services:
       POSTGRES_PASSWORD: 12345
       POSTGRES_USER: root
       POSTGRES_DB: a5_db
-      PROD: TRUE
+      PROD: 1
 
     env_file:
       - .env
