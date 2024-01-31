@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-kn8#0#&6m+ek+%ajq8jii_6&mli#%@$$b&qnb)2)n@0!pvmz$9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False if os.environ.get("PROD") else True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -105,10 +105,10 @@ WSGI_APPLICATION = 'food.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'a5_db',
-        'PASSWORD': '12345',
-        'USER': 'root',
-        'HOST': '127.0.0.1',
+        'NAME': os.environ.get("POSTGRES_DB"),
+        'PASSWORD': os.environ.get("POSTGRES_PASSWORD"),
+        'USER': os.environ.get("POSTGRES_USER"),
+        'HOST': 'db',
         'PORT': 5432
     }
 }
@@ -174,7 +174,12 @@ AUTHENTICATION_BACKENDS = [
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [BASE_DIR, 'static']
+if DEBUG:
+        STATICFILES_DIRS = [
+            os.path.join(BASE_DIR, 'static')
+       ]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 
@@ -242,5 +247,5 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
